@@ -31,6 +31,7 @@ src/
 ├── database.js        # escolhe MySQL ou PostgreSQL
 ├── models.js          # tabelas: usuarios, colheitas, vendas
 ├── estoque.js         # cálculo do estoque
+├── docs/openapi.js    # especificação OpenAPI para o Swagger
 ├── middleware/auth.js # protege as rotas com o token
 └── routes/            # auth, colheitas, vendas, resumo
 ```
@@ -46,6 +47,12 @@ src/
 | GET / POST | `/vendas` | sim | Lista / cadastra `{ data, quantidade, preco_unitario, cliente }` |
 | DELETE | `/vendas/:id` | sim | Exclui uma venda |
 | GET | `/resumo` | sim | Totais para o painel |
+
+## Documentação interativa (Swagger)
+
+Com a API em execução, abra [http://localhost:3001/docs](http://localhost:3001/docs) para consultar e testar os endpoints pela interface Swagger UI. A especificação OpenAPI em JSON também está disponível em [http://localhost:3001/docs.json](http://localhost:3001/docs.json).
+
+Para testar endpoints protegidos, faça login em `POST /auth/login`, copie o valor de `token` e clique em **Authorize** na interface Swagger. Informe o token JWT; não é necessário digitar o prefixo `Bearer`.
 
 As rotas que exigem login precisam do cabeçalho `Authorization: Bearer <token>`.
 
