@@ -1,23 +1,24 @@
 import { useEffect, useState } from 'react';
-import { api, formatarReais } from '../api.js';
+import { api } from '../api.js';
+import { formatarReais, traduzir, traduzirErroApi } from '../i18n.js';
 
-export default function Painel() {
+export default function Painel({ idioma }) {
   const [resumo, setResumo] = useState(null);
   const [erro, setErro] = useState('');
 
   useEffect(() => {
-    api('/resumo').then(setResumo).catch((err) => setErro(err.message));
+    api('/resumo').then(setResumo).catch(setErro);
   }, []);
 
-  if (erro) return <p className="erro">{erro}</p>;
-  if (!resumo) return <p>Carregando...</p>;
+  if (erro) return <p className="erro">{traduzirErroApi(erro, idioma)}</p>;
+  if (!resumo) return <p>{traduzir(idioma, 'carregando')}</p>;
 
   return (
     <div className="indicadores">
-      <div className="card"><span>Total colhido</span><strong>{resumo.colhido}</strong></div>
-      <div className="card"><span>Total vendido</span><strong>{resumo.vendido}</strong></div>
-      <div className="card"><span>Em estoque</span><strong>{resumo.estoque}</strong></div>
-      <div className="card"><span>Faturamento</span><strong>{formatarReais(resumo.faturamento)}</strong></div>
+      <div className="card"><span>{traduzir(idioma, 'totalColhido')}</span><strong>{resumo.colhido}</strong></div>
+      <div className="card"><span>{traduzir(idioma, 'totalVendido')}</span><strong>{resumo.vendido}</strong></div>
+      <div className="card"><span>{traduzir(idioma, 'emEstoque')}</span><strong>{resumo.estoque}</strong></div>
+      <div className="card"><span>{traduzir(idioma, 'faturamento')}</span><strong>{formatarReais(resumo.faturamento, idioma)}</strong></div>
     </div>
   );
 }

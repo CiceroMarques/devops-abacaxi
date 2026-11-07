@@ -9,6 +9,9 @@ Este documento define a referência visual e os padrões de interface do Fazenda
 - Use textos e rótulos em português, curtos e objetivos.
 - Dê destaque visual às ações principais sem confundir ações secundárias ou destrutivas.
 - Preserve a identidade existente. Não faça uma reformulação de marca ou introduza dependências visuais sem necessidade.
+- Disponibilize Português (padrão), English e chinês simplificado em todas as telas, incluindo o Login.
+- Exiba a seleção de idioma por bandeiras no topo e persista a escolha em `localStorage`, sem apagá-la ao sair da conta.
+- Use `src/i18n.js` para textos e formatação localizada; mantenha o idioma do documento sincronizado.
 
 ## Paleta atual
 
@@ -60,6 +63,7 @@ Ao adicionar ou alterar combinações de cores, confira o contraste entre texto,
 | Indicador | `.indicadores` em grade; rótulo secundário e valor em destaque |
 | Erro e dica | `.erro` para falhas; `.dica` para informação auxiliar |
 | Marca | `🍍`, usado pontualmente; `.abacaxi-large` quando ampliado |
+| Idioma | `.seletor-idioma`, bandeiras com estado ativo e rótulos acessíveis |
 
 Antes de criar uma classe ou variante, verifique se os padrões existentes podem ser reutilizados. Mantenha os estilos em `src/styles.css`, evite estilos inline e não adicione bibliotecas de UI ou ícones sem uma necessidade concreta.
 

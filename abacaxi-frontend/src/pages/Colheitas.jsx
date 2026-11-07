@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import { api, formatarData, hoje } from '../api.js';
+import { api, hoje } from '../api.js';
+import { formatarData, traduzir, traduzirErroApi } from '../i18n.js';
 
-export default function Colheitas() {
+export default function Colheitas({ idioma }) {
   const [colheitas, setColheitas] = useState([]);
   const [form, setForm] = useState({ data: hoje(), quantidade: '', observacao: '' });
   const [erro, setErro] = useState('');
 
-  const carregar = () => api('/colheitas').then(setColheitas).catch((err) => setErro(err.message));
+  const carregar = () => api('/colheitas').then(setColheitas).catch(setErro);
   useEffect(() => { carregar(); }, []);
 
   async function salvar(e) {
@@ -20,7 +21,7 @@ export default function Colheitas() {
       setForm({ ...form, quantidade: '', observacao: '' });
       carregar();
     } catch (err) {
-      setErro(err.message);
+      setErro(err);
     }
   }
 
@@ -30,45 +31,50 @@ export default function Colheitas() {
       await api(`/colheitas/${id}`, { method: 'DELETE' });
       carregar();
     } catch (err) {
-      setErro(err.message);
+      setErro(err);
     }
   }
 
   return (
     <>
       <form className="card formulario" onSubmit={salvar}>
-        <h2>Registrar colheita</h2>
+        <h2>{traduzir(idioma, 'registrarColheita')}</h2>
         <label>
-          Data
+          {traduzir(idioma, 'data')}
           <input type="date" value={form.data} onChange={(e) => setForm({ ...form, data: e.target.value })} required />
         </label>
         <label>
-          Quantidade
+          {traduzir(idioma, 'quantidade')}
           <input type="number" min="1" value={form.quantidade} onChange={(e) => setForm({ ...form, quantidade: e.target.value })} required />
         </label>
         <label>
-          Observação
+          {traduzir(idioma, 'observacao')}
           <input value={form.observacao} onChange={(e) => setForm({ ...form, observacao: e.target.value })} />
         </label>
-        <button type="submit">Salvar</button>
+        <button type="submit">{traduzir(idioma, 'salvar')}</button>
       </form>
-      {erro && <p className="erro">{erro}</p>}
+      {erro && <p className="erro">{traduzirErroApi(erro, idioma)}</p>}
 
       <div className="card tabela">
         <table>
           <thead>
-            <tr><th>Data</th><th>Quantidade</th><th>Observação</th><th></th></tr>
+            <tr>
+              <th>{traduzir(idioma, 'data')}</th>
+              <th>{traduzir(idioma, 'quantidade')}</th>
+              <th>{traduzir(idioma, 'observacao')}</th>
+              <th></th>
+            </tr>
           </thead>
           <tbody>
             {colheitas.map((c) => (
               <tr key={c.id}>
-                <td>{formatarData(c.data)}</td>
+                <td>{formatarData(c.data, idioma)}</td>
                 <td>{c.quantidade}</td>
                 <td>{c.observacao}</td>
-                <td><button className="excluir" onClick={() => excluir(c.id)}>Excluir</button></td>
+                <td><button className="excluir" onClick={() => excluir(c.id)}>{traduzir(idioma, 'excluir')}</button></td>
               </tr>
             ))}
-            {colheitas.length === 0 && <tr><td colSpan="4">Nenhuma colheita registrada.</td></tr>}
+            {colheitas.length === 0 && <tr><td colSpan="4">{traduzir(idioma, 'nenhumaColheita')}</td></tr>}
           </tbody>
         </table>
       </div>

@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import { api, formatarData, formatarReais, hoje } from '../api.js';
+import { api, hoje } from '../api.js';
+import { formatarData, formatarReais, traduzir, traduzirErroApi } from '../i18n.js';
 
-export default function Vendas() {
+export default function Vendas({ idioma }) {
   const [vendas, setVendas] = useState([]);
   const [form, setForm] = useState({ data: hoje(), quantidade: '', preco_unitario: '', cliente: '' });
   const [erro, setErro] = useState('');
 
-  const carregar = () => api('/vendas').then(setVendas).catch((err) => setErro(err.message));
+  const carregar = () => api('/vendas').then(setVendas).catch(setErro);
   useEffect(() => { carregar(); }, []);
 
   async function salvar(e) {
@@ -24,7 +25,7 @@ export default function Vendas() {
       setForm({ ...form, quantidade: '', preco_unitario: '', cliente: '' });
       carregar();
     } catch (err) {
-      setErro(err.message);
+      setErro(err);
     }
   }
 
@@ -34,51 +35,58 @@ export default function Vendas() {
       await api(`/vendas/${id}`, { method: 'DELETE' });
       carregar();
     } catch (err) {
-      setErro(err.message);
+      setErro(err);
     }
   }
 
   return (
     <>
       <form className="card formulario" onSubmit={salvar}>
-        <h2>Registrar venda</h2>
+        <h2>{traduzir(idioma, 'registrarVenda')}</h2>
         <label>
-          Data
+          {traduzir(idioma, 'data')}
           <input type="date" value={form.data} onChange={(e) => setForm({ ...form, data: e.target.value })} required />
         </label>
         <label>
-          Quantidade
+          {traduzir(idioma, 'quantidade')}
           <input type="number" min="1" value={form.quantidade} onChange={(e) => setForm({ ...form, quantidade: e.target.value })} required />
         </label>
         <label>
-          Preço unitário (R$)
+          {traduzir(idioma, 'precoUnitario')}
           <input type="number" min="0.01" step="0.01" value={form.preco_unitario} onChange={(e) => setForm({ ...form, preco_unitario: e.target.value })} required />
         </label>
         <label>
-          Cliente
+          {traduzir(idioma, 'cliente')}
           <input value={form.cliente} onChange={(e) => setForm({ ...form, cliente: e.target.value })} />
         </label>
-        <button type="submit">Salvar</button>
+        <button type="submit">{traduzir(idioma, 'salvar')}</button>
       </form>
-      {erro && <p className="erro">{erro}</p>}
+      {erro && <p className="erro">{traduzirErroApi(erro, idioma)}</p>}
 
       <div className="card tabela">
         <table>
           <thead>
-            <tr><th>Data</th><th>Cliente</th><th>Qtd.</th><th>Preço un.</th><th>Total</th><th></th></tr>
+            <tr>
+              <th>{traduzir(idioma, 'data')}</th>
+              <th>{traduzir(idioma, 'cliente')}</th>
+              <th>{traduzir(idioma, 'quantidadeAbreviada')}</th>
+              <th>{traduzir(idioma, 'precoAbreviado')}</th>
+              <th>{traduzir(idioma, 'total')}</th>
+              <th></th>
+            </tr>
           </thead>
           <tbody>
             {vendas.map((v) => (
               <tr key={v.id}>
-                <td>{formatarData(v.data)}</td>
+                <td>{formatarData(v.data, idioma)}</td>
                 <td>{v.cliente}</td>
                 <td>{v.quantidade}</td>
-                <td>{formatarReais(v.preco_unitario)}</td>
-                <td>{formatarReais(v.quantidade * Number(v.preco_unitario))}</td>
-                <td><button className="excluir" onClick={() => excluir(v.id)}>Excluir</button></td>
+                <td>{formatarReais(v.preco_unitario, idioma)}</td>
+                <td>{formatarReais(v.quantidade * Number(v.preco_unitario), idioma)}</td>
+                <td><button className="excluir" onClick={() => excluir(v.id)}>{traduzir(idioma, 'excluir')}</button></td>
               </tr>
             ))}
-            {vendas.length === 0 && <tr><td colSpan="6">Nenhuma venda registrada.</td></tr>}
+            {vendas.length === 0 && <tr><td colSpan="6">{traduzir(idioma, 'nenhumaVenda')}</td></tr>}
           </tbody>
         </table>
       </div>

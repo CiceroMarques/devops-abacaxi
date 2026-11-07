@@ -7,6 +7,8 @@ Interface web em **React + Vite** do sistema da Fazenda de Abacaxis. Tem as tela
 - **Colheitas**: registrar data e quantidade de abacaxis colhidos
 - **Vendas**: registrar vendas (data, quantidade, preço, cliente)
 
+A interface oferece Português (padrão), inglês e chinês simplificado. Use as bandeiras no topo para trocar o idioma; a preferência fica salva no navegador.
+
 Este projeto só exibe as telas. Os dados vêm da API, que fica na pasta [../abacaxi-backend](../abacaxi-backend) do mesmo repositório (**devops-abacaxi**).
 
 ## Como o frontend encontra a API?
@@ -27,6 +29,9 @@ src/
 ├── main.jsx          # ponto de entrada
 ├── App.jsx           # menu e troca de páginas
 ├── api.js            # função que chama a API (usa VITE_API_URL)
+├── i18n.js           # traduções e formatação por idioma
+├── components/
+│   └── SeletorIdioma.jsx
 ├── styles.css
 └── pages/
     ├── Login.jsx

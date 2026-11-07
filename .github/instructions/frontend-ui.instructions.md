@@ -51,7 +51,10 @@ A aplicação está focada em gestão da fazenda, então a UI deve transmitir cl
 Ao alterar a interface, mantenha os seguintes pontos em mente:
 
 - O frontend é a representação do sistema para o usuário final.
-- Os textos e rótulos devem permanecer em português.
+- A interface deve oferecer Português (`pt-BR`, padrão), inglês (`en`) e chinês simplificado (`zh-CN`).
+- Todo texto novo visível ao usuário deve ser adicionado às traduções em `abacaxi-frontend/src/i18n.js`; não deixe rótulos ou mensagens de interface fixos em um único idioma.
+- Use o seletor de bandeiras existente e preserve a preferência `idioma` no `localStorage`, inclusive ao sair da conta.
+- Formate datas, números e valores monetários com a localidade selecionada.
 - Os nomes de telas e ações devem refletir o domínio da aplicação: login, painel, colheitas, vendas, resumo, estoque.
 - Documente mudanças relevantes de visual em `abacaxi-frontend/README.md` quando houver ajuste de fluxo, tela ou comportamento de interação.
 - Sempre que uma alteração alterar a experiência de uso, revise se o README e a intenção do projeto continuam coerentes.
