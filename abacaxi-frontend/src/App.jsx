@@ -57,6 +57,7 @@ export default function App() {
         <SeletorIdioma idioma={idioma} onAlterar={alterarIdioma} />
       </header>
       <main>
+        <p className="dica">{traduzir(idioma, 'avisoMoeda')}</p>
         {pagina === 'painel' && <Painel idioma={idioma} />}
         {pagina === 'colheitas' && <Colheitas idioma={idioma} />}
         {pagina === 'vendas' && <Vendas idioma={idioma} />}
