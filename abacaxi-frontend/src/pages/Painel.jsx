@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { api } from '../api.js';
-import { formatarReais, traduzir, traduzirErroApi } from '../i18n.js';
+import { formatarDolares, traduzir, traduzirErroApi } from '../i18n.js';
 
 export default function Painel({ idioma }) {
   const [resumo, setResumo] = useState(null);
@@ -18,7 +18,7 @@ export default function Painel({ idioma }) {
       <div className="card"><span>{traduzir(idioma, 'totalColhido')}</span><strong>{resumo.colhido}</strong></div>
       <div className="card"><span>{traduzir(idioma, 'totalVendido')}</span><strong>{resumo.vendido}</strong></div>
       <div className="card"><span>{traduzir(idioma, 'emEstoque')}</span><strong>{resumo.estoque}</strong></div>
-      <div className="card"><span>{traduzir(idioma, 'faturamento')}</span><strong>{formatarReais(resumo.faturamento, idioma)}</strong></div>
+      <div className="card"><span>{traduzir(idioma, 'faturamento')}</span><strong>{formatarDolares(resumo.faturamento, idioma)}</strong></div>
     </div>
   );
 }

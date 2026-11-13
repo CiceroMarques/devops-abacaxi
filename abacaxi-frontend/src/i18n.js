@@ -27,7 +27,7 @@ const traducoes = {
     data: 'Data',
     quantidade: 'Quantidade',
     observacao: 'Observação',
-    precoUnitario: 'Preço unitário (R$)',
+    precoUnitario: 'Preço unitário (USD)',
     cliente: 'Cliente',
     salvar: 'Salvar',
     excluir: 'Excluir',
@@ -61,7 +61,7 @@ const traducoes = {
     data: 'Date',
     quantidade: 'Quantity',
     observacao: 'Notes',
-    precoUnitario: 'Unit price (R$)',
+    precoUnitario: 'Unit price (USD)',
     cliente: 'Customer',
     salvar: 'Save',
     excluir: 'Delete',
@@ -95,7 +95,7 @@ const traducoes = {
     data: '日期',
     quantidade: '数量',
     observacao: '备注',
-    precoUnitario: '单价 (R$)',
+    precoUnitario: '单价 (USD)',
     cliente: '客户',
     salvar: '保存',
     excluir: '删除',
@@ -169,6 +169,10 @@ export function formatarData(data, idioma) {
   return new Intl.DateTimeFormat(idioma).format(new Date(ano, mes - 1, dia));
 }
 
-export function formatarReais(valor, idioma) {
-  return new Intl.NumberFormat(idioma, { style: 'currency', currency: 'BRL' }).format(Number(valor));
+export function formatarDolares(valor, idioma) {
+  return new Intl.NumberFormat(idioma, {
+    style: 'currency',
+    currency: 'USD',
+    currencyDisplay: 'code',
+  }).format(Number(valor));
 }

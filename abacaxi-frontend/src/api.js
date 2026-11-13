@@ -27,6 +27,4 @@ export async function api(caminho, { method = 'GET', body } = {}) {
 }
 
 export const formatarData = (data) => data.split('-').reverse().join('/');
-export const formatarReais = (valor) =>
-  Number(valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 export const hoje = () => new Date().toISOString().slice(0, 10);

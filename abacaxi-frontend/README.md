@@ -9,6 +9,8 @@ Interface web em **React + Vite** do sistema da Fazenda de Abacaxis. Tem as tela
 
 A interface oferece Português (padrão), inglês e chinês simplificado. Use as bandeiras no topo para trocar o idioma; a preferência fica salva no navegador.
 
+Todos os valores monetários são exibidos em USD, independentemente do idioma selecionado. A formatação dos números segue a localidade do idioma; os valores numéricos não são convertidos.
+
 Este projeto só exibe as telas. Os dados vêm da API, que fica na pasta [../abacaxi-backend](../abacaxi-backend) do mesmo repositório (**devops-abacaxi**).
 
 ## Como o frontend encontra a API?
